@@ -1,4 +1,4 @@
-name : Deploy static website via Docker to EC2
+name: Deploy Static Website via Docker to EC2
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/Checkout@v3
+      uses: actions/checkout@v3
 
     - name: Copy Files to EC2
       uses: appleboy/scp-action@v0.1.4
@@ -20,8 +20,8 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         source: "."
-        target: "~/sohamsite" 
-    
+        target: "~/sohamsite"
+
     - name: SSH into EC2 and Rebuild Docker
       uses: appleboy/ssh-action@master
       with:
@@ -33,8 +33,3 @@ jobs:
           docker-compose down
           docker-compose build --no-cache
           docker-compose up -d
-
-    
-
-    
-
