@@ -4,6 +4,6 @@ services:
     build: .
     ports:
       - "80:80"
-    container-name: soham-nginx-site
+    container_name: soham-nginx-site
 
     restart: always
