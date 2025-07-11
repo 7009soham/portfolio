@@ -561,51 +561,22 @@ let galaxyAnimation;
 document.addEventListener('DOMContentLoaded', function() {
   galaxyAnimation = new GalaxyAnimation();
   
-  // Mobile Navigation Toggle with debouncing for better performance
+  // Mobile Navigation Toggle
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
-  let isToggling = false;
   
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      if (isToggling) return; // Prevent rapid clicking
-      
-      isToggling = true;
-      
-      // Use requestAnimationFrame for smoother animation
-      requestAnimationFrame(() => {
-        navLinks.classList.toggle('open');
-        hamburger.classList.toggle('active');
-        
-        // Reset debounce flag after animation
-        setTimeout(() => {
-          isToggling = false;
-        }, 300);
-      });
-    });
-    
-    // Close mobile nav when clicking on a link
-    navLinks.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        requestAnimationFrame(() => {
-          navLinks.classList.remove('open');
-          hamburger.classList.remove('active');
-        });
-      }
-    });
-    
-    // Close mobile nav when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-        if (navLinks.classList.contains('open')) {
-          requestAnimationFrame(() => {
-            navLinks.classList.remove('open');
-            hamburger.classList.remove('active');
-          });
-        }
-      }
-    });
-  }
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active');
+  });
+  
+  // Close mobile nav when clicking on a link
+  navLinks.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('active');
+    }
+  });
   
   // Smooth scrolling for navigation links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -621,32 +592,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Enhanced Navbar background change on scroll with mobile optimization
-  let scrollTimeout;
-  const isMobileDevice = window.innerWidth <= 768;
-  const scrollThrottle = isMobileDevice ? 100 : 16; // Less frequent on mobile
-  
+  // Enhanced Navbar background change on scroll
   window.addEventListener('scroll', () => {
-    if (scrollTimeout) return;
+    const navbar = document.querySelector('.navbar');
+    const scrolled = window.scrollY > 100;
     
-    scrollTimeout = setTimeout(() => {
-      const navbar = document.querySelector('.navbar');
-      if (navbar) {
-        const scrolled = window.scrollY > 100;
-        
-        if (scrolled) {
-          navbar.style.background = 'rgba(10, 10, 15, 0.98)';
-          navbar.style.backdropFilter = 'blur(20px)';
-          navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
-        } else {
-          navbar.style.background = 'rgba(10, 10, 15, 0.95)';
-          navbar.style.backdropFilter = 'blur(10px)';
-          navbar.style.boxShadow = 'none';
-        }
-      }
-      scrollTimeout = null;
-    }, scrollThrottle);
-  }, { passive: true });
+    if (scrolled) {
+      navbar.style.background = 'rgba(10, 10, 15, 0.98)';
+      navbar.style.backdropFilter = 'blur(20px)';
+      navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+    } else {
+      navbar.style.background = 'rgba(10, 10, 15, 0.95)';
+      navbar.style.backdropFilter = 'blur(10px)';
+      navbar.style.boxShadow = 'none';
+    }
+  });
   
   // Enhanced skill bars animation with intersection observer
   const observerOptions = {
@@ -688,6 +648,142 @@ document.addEventListener('DOMContentLoaded', function() {
     rootMargin: '0px 0px -100px 0px'
   });
   
+  // Apply observers to elements
+  document.addEventListener('DOMContentLoaded', function() {
+    // Observe skill items
+    document.querySelectorAll('.skill-item').forEach(skill => {
+      skillObserver.observe(skill);
+    });
+    
+    // Observe other elements for reveal animations
+    document.querySelectorAll('.project-card, .hobby-card, .contact-card, .section-title').forEach((element, index) => {
+      element.style.opacity = '0';
+      element.dataset.animation = index % 2 === 0 ? 'slideInFromLeft' : 'slideInFromRight';
+      revealObserver.observe(element);
+    });
+    
+    // Enhanced mobile optimizations
+    if (window.innerWidth <= 768) {
+      document.documentElement.style.setProperty('--transition', 'all 0.2s ease');
+      document.documentElement.style.setProperty('--galaxy-speed', '30s'); // Slower on mobile
+      document.documentElement.style.setProperty('--dot-size', '1px'); // Smaller dots on mobile
+    }
+    
+    // Touch improvements
+    if ('ontouchstart' in window) {
+      document.body.classList.add('touch-device');
+      
+      const touchElements = document.querySelectorAll('.btn, .card-link, .nav-links a, .project-card, .hobby-card');
+      touchElements.forEach(element => {
+        element.addEventListener('touchstart', function(e) {
+          this.style.transform = 'scale(0.98)';
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function(e) {
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        }, { passive: true });
+      });
+    }
+    
+    // Performance optimization: Pause animations when tab is not visible
+    document.addEventListener('visibilitychange', function() {
+      const galaxyContainer = document.getElementById('galaxyContainer');
+      if (document.hidden) {
+        galaxyContainer.style.animationPlayState = 'paused';
+      } else {
+        galaxyContainer.style.animationPlayState = 'running';
+      }
+    });
+  });
+});
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  hamburger.classList.toggle('active');
+});
+
+// Close mobile nav when clicking on a link
+navLinks.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') {
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('active');
+  }
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Enhanced Navbar background change on scroll
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  const scrolled = window.scrollY > 100;
+  
+  if (scrolled) {
+    navbar.style.background = 'rgba(10, 10, 15, 0.98)';
+    navbar.style.backdropFilter = 'blur(20px)';
+    navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+  } else {
+    navbar.style.background = 'rgba(10, 10, 15, 0.95)';
+    navbar.style.backdropFilter = 'blur(10px)';
+    navbar.style.boxShadow = 'none';
+  }
+});
+
+// Enhanced skill bars animation with intersection observer
+const observerOptions = {
+  threshold: 0.3,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      const skillBar = entry.target.querySelector('.skill-progress');
+      if (skillBar) {
+        const percentage = skillBar.style.width;
+        skillBar.style.width = '0%';
+        
+        setTimeout(() => {
+          skillBar.style.transition = 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+          skillBar.style.width = percentage;
+        }, index * 100);
+      }
+      
+      // Add slide-in animation to skill items
+      entry.target.style.animation = `slideInFromBottom 0.6s ease-out ${index * 0.1}s forwards`;
+    }
+  });
+}, observerOptions);
+
+// Enhanced scroll reveal animations
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      const animationType = entry.target.dataset.animation || 'slideInFromBottom';
+      entry.target.style.animation = `${animationType} 0.8s ease-out ${index * 0.1}s forwards`;
+      entry.target.style.opacity = '1';
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+});
+
+// Apply observers to elements
+document.addEventListener('DOMContentLoaded', function() {
   // Observe skill items
   document.querySelectorAll('.skill-item').forEach(skill => {
     skillObserver.observe(skill);
@@ -703,8 +799,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Enhanced mobile optimizations
   if (window.innerWidth <= 768) {
     document.documentElement.style.setProperty('--transition', 'all 0.2s ease');
-    document.documentElement.style.setProperty('--galaxy-speed', '30s');
-    document.documentElement.style.setProperty('--dot-size', '1px');
+    document.documentElement.style.setProperty('--galaxy-speed', '30s'); // Slower on mobile
+    document.documentElement.style.setProperty('--dot-size', '1px'); // Smaller dots on mobile
   }
   
   // Touch improvements
@@ -725,200 +821,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Enhanced Performance optimization: Better animation handling for tab visibility and focus
-  let isPageVisible = !document.hidden;
-  let isPageFocused = document.hasFocus();
-  let galaxyInstance = null;
-  let animationsPaused = false;
-  
-  // More robust animation state management
-  function handleAnimationState() {
-    const galaxyContainer = document.getElementById('galaxyContainer');
-    const shouldPause = !isPageVisible || !isPageFocused;
-    
-    if (shouldPause && !animationsPaused) {
-      animationsPaused = true;
-      
-      if (galaxyContainer) {
-        // Pause all CSS animations
-        galaxyContainer.style.animationPlayState = 'paused';
-        
-        // Pause dot animations
-        galaxyContainer.querySelectorAll('.dot').forEach(dot => {
-          dot.style.animationPlayState = 'paused';
-        });
-        
-        // Pause galaxy layer animations
-        galaxyContainer.querySelectorAll('.galaxy-layer').forEach(layer => {
-          layer.style.animationPlayState = 'paused';
-        });
-        
-        // Pause nebula animations
-        galaxyContainer.querySelectorAll('div[style*="nebulaFlow"]').forEach(nebula => {
-          nebula.style.animationPlayState = 'paused';
-        });
-        
-        // Stop JS animations
-        if (galaxyInstance && galaxyInstance.animationFrame) {
-          cancelAnimationFrame(galaxyInstance.animationFrame);
-          galaxyInstance.animationFrame = null;
-        }
-      }
-    } else if (!shouldPause && animationsPaused) {
-      animationsPaused = false;
-      
-      if (galaxyContainer) {
-        // Resume all CSS animations
-        galaxyContainer.style.animationPlayState = 'running';
-        
-        // Resume dot animations
-        galaxyContainer.querySelectorAll('.dot').forEach(dot => {
-          dot.style.animationPlayState = 'running';
-        });
-        
-        // Resume galaxy layer animations
-        galaxyContainer.querySelectorAll('.galaxy-layer').forEach(layer => {
-          layer.style.animationPlayState = 'running';
-        });
-        
-        // Resume nebula animations
-        galaxyContainer.querySelectorAll('div[style*="nebulaFlow"]').forEach(nebula => {
-          nebula.style.animationPlayState = 'running';
-        });
-        
-        // Restart JS animations
-        if (galaxyInstance && !galaxyInstance.animationFrame) {
-          galaxyInstance.startAnimation();
-        }
-      }
-    }
-  }
-  
-  // Multiple event listeners for comprehensive coverage
-  document.addEventListener('visibilitychange', function() {
-    isPageVisible = !document.hidden;
-    // Add small delay to ensure state is properly updated
-    setTimeout(handleAnimationState, 50);
-  });
-  
-  window.addEventListener('focus', function() {
-    isPageFocused = true;
-    setTimeout(handleAnimationState, 50);
-  });
-  
-  window.addEventListener('blur', function() {
-    isPageFocused = false;
-    setTimeout(handleAnimationState, 50);
-  });
-  
-  // Additional events for better coverage
-  window.addEventListener('pagehide', function() {
-    isPageVisible = false;
-    isPageFocused = false;
-    handleAnimationState();
-  });
-  
-  window.addEventListener('pageshow', function() {
-    isPageVisible = true;
-    isPageFocused = true;
-    setTimeout(handleAnimationState, 100);
-  });
-  
-  // Handle window minimize/restore (Windows specific)
-  window.addEventListener('beforeunload', function() {
-    isPageVisible = false;
-    isPageFocused = false;
-    handleAnimationState();
-  });
-  
-  // Scrollspy functionality for navbar
-  function initScrollspy() {
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-    const sections = Array.from(navLinks).map(link => {
-      const id = link.getAttribute('href').substring(1);
-      return document.getElementById(id);
-    }).filter(section => section !== null);
-    
-    function updateActiveNav() {
-      const scrollY = window.pageYOffset;
-      const windowHeight = window.innerHeight;
-      let currentSection = '';
-      
-      // Check each section to see which one is currently in view
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100; // 100px offset for navbar
-        const sectionBottom = sectionTop + section.offsetHeight;
-        
-        if (scrollY >= sectionTop && scrollY < sectionBottom) {
-          currentSection = section.id;
-        }
-      });
-      
-      // If we're at the very top, make sure 'home' is active
-      if (scrollY < 100) {
-        currentSection = 'home';
-      }
-      
-      // Update active nav link
-      navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href').substring(1);
-        if (linkHref === currentSection) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
-    }
-    
-    // Throttled scroll handler for better performance
-    let ticking = false;
-    function handleScroll() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateActiveNav();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-    
-    // Initial call and event listener
-    updateActiveNav();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Smooth scroll behavior for nav links
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        
-        if (targetSection) {
-          const offsetTop = targetSection.offsetTop - 80; // Account for navbar height
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  }
-  
-  // Initialize scrollspy
-  initScrollspy();
-
-  // Store galaxy instance reference for animation control
-  if (typeof galaxyAnimation !== 'undefined') {
-    galaxyInstance = galaxyAnimation;
-  } else {
-    // Wait for galaxy animation to be created
-    setTimeout(() => {
-      if (typeof galaxyAnimation !== 'undefined') {
-        galaxyInstance = galaxyAnimation;
-      }
-    }, 100);
-  }
-
   // Performance optimization: Pause animations when tab is not visible
+  document.addEventListener('visibilitychange', function() {
+    const galaxyContainer = document.getElementById('galaxyContainer');
+    if (document.hidden) {
+      galaxyContainer.style.animationPlayState = 'paused';
+    } else {
+      galaxyContainer.style.animationPlayState = 'running';
+    }
+  });
 });
-
