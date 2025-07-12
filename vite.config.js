@@ -20,5 +20,8 @@ export default defineConfig({
         }
       }
     }
-  }
+  },
+  // Copy static assets
+  publicDir: 'public',
+  assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf']
 })

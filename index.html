@@ -9,10 +9,12 @@
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- Font Awesome -->
+  <!-- Font Awesome with Local Fallback -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Backup Font Awesome (in case CDN fails) -->
+  <!-- Backup CDN Font Awesome (in case primary CDN fails) -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css" crossorigin="anonymous"/>
+  <!-- Local Fallback Font Awesome (in case both CDNs fail) -->
+  <link rel="stylesheet" href="assets/fontawesome/css/all.min.css" id="fontawesome-fallback" disabled/>
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -577,7 +579,59 @@
     </div>
   </footer>
 
+  <!-- Font Awesome Fallback Detection Script -->
+  <script>
+    // Font Awesome fallback detection
+    (function() {
+      function isFontAwesomeLoaded() {
+        // Create a test element with a Font Awesome icon
+        var testElement = document.createElement('i');
+        testElement.className = 'fas fa-home';
+        testElement.style.position = 'absolute';
+        testElement.style.left = '-9999px';
+        testElement.style.fontSize = '12px';
+        document.body.appendChild(testElement);
+        
+        var computedStyle = window.getComputedStyle(testElement, ':before');
+        var fontFamily = computedStyle.getPropertyValue('font-family');
+        
+        document.body.removeChild(testElement);
+        
+        // Check if Font Awesome font family is loaded
+        return fontFamily.indexOf('Font Awesome') !== -1;
+      }
+      
+      function loadFallbackFontAwesome() {
+        console.log('Loading Font Awesome fallback...');
+        var fallbackLink = document.getElementById('fontawesome-fallback');
+        if (fallbackLink) {
+          fallbackLink.disabled = false;
+          fallbackLink.href = 'assets/fontawesome/css/all.min.css';
+        }
+      }
+      
+      // Check if Font Awesome is loaded after a short delay
+      setTimeout(function() {
+        if (!isFontAwesomeLoaded()) {
+          console.warn('Font Awesome CDN failed to load, using local fallback');
+          loadFallbackFontAwesome();
+        } else {
+          console.log('Font Awesome loaded successfully from CDN');
+        }
+      }, 1000);
+      
+      // Also check on window load as a backup
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (!isFontAwesomeLoaded()) {
+            loadFallbackFontAwesome();
+          }
+        }, 500);
+      });
+    })();
+  </script>
+
   <!-- Scripts -->
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
