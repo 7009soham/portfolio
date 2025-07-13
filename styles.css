@@ -2022,3 +2022,32 @@ body {
     font-size: 0.85rem !important;
   }
 }
+
+
+/* Add this at the end of your CSS file: */
+
+/* Force contact icons to display */
+.contact-item i {
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+  font-weight: 900 !important;
+  width: 20px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* Specific icon fixes */
+.fa-envelope::before { content: "\f0e0" !important; }
+.fab.fa-github::before { content: "\f09b" !important; font-weight: 400 !important; }
+.fab.fa-linkedin::before { content: "\f08c" !important; font-weight: 400 !important; }
+.fa-location-dot::before { content: "\f3c5" !important; }
+
+/* Fallback for contact icons */
+.contact-item i.fa-envelope::before { content: "✉️"; font-family: inherit !important; }
+.contact-item i.fab.fa-github::before { content: "🐙"; font-family: inherit !important; }
+.contact-item i.fab.fa-linkedin::before { content: "💼"; font-family: inherit !important; }
+.contact-item i.fa-location-dot::before { content: "📍"; font-family: inherit !important; }
