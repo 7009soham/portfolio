@@ -568,16 +568,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
-      if (isToggling) return; // Prevent rapid clicking
+      if (isToggling) return;
       
       isToggling = true;
       
-      // Use requestAnimationFrame for smoother animation
       requestAnimationFrame(() => {
         navLinks.classList.toggle('open');
         hamburger.classList.toggle('active');
         
-        // Reset debounce flag after animation
         setTimeout(() => {
           isToggling = false;
         }, 300);
@@ -593,6 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
+  
     
     // Close mobile nav when clicking outside
     document.addEventListener('click', (e) => {
@@ -611,15 +610,73 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+      try {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      } catch (error) {
+        console.warn('Smooth scroll failed:', error);
       }
     });
   });
+// Mobile tooltip functionality - WORKING VERSION
+  function initMobileTooltips() {
+    try {
+      if (window.innerWidth <= 768) {
+        const skillItems = document.querySelectorAll('.skill-item');
+        
+        skillItems.forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Close other tooltips
+            skillItems.forEach(otherItem => {
+              if (otherItem !== item) {
+                otherItem.classList.remove('active');
+              }
+            });
+            
+            // Toggle current tooltip
+            this.classList.toggle('active');
+          });
+        });
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.skill-item')) {
+            skillItems.forEach(item => {
+              item.classList.remove('active');
+            });
+          }
+        });
+      }
+    } catch (error) {
+      console.warn('Mobile tooltips failed:', error);
+    }
+  }
+  
+  // Initialize mobile tooltips
+  initMobileTooltips();
+  
+  // Handle resize
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      document.querySelectorAll('.skill-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      initMobileTooltips();
+    }, 250);
+  });
+
+  
   
   // Enhanced Navbar background change on scroll with mobile optimization
   let scrollTimeout;
@@ -918,6 +975,83 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 100);
   }
+
+  // Add this after line 921 (after the galaxy instance code)
+
+// Mobile tooltip functionality - Add this after line 921
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile tooltip handling
+    function initMobileTooltips() {
+        if (window.innerWidth <= 768) {
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Close any other open tooltips
+                    skillItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current tooltip
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Close tooltip when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.skill-item')) {
+                    skillItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Close tooltip when tapping the tooltip itself (mobile behavior)
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.skill-tooltip')) {
+                    const skillItem = e.target.closest('.skill-item');
+                    if (skillItem) {
+                        skillItem.classList.remove('active');
+                    }
+                }
+            });
+        }
+    }
+    
+    // Initialize mobile tooltips
+    initMobileTooltips();
+    
+    // Reinitialize on window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            // Remove all active states first
+            document.querySelectorAll('.skill-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Reinitialize for new screen size
+            initMobileTooltips();
+        }, 250);
+    });
+    
+    // Handle orientation change
+    window.addEventListener('orientationchange', function() {
+        // Close all tooltips on orientation change
+        setTimeout(() => {
+            document.querySelectorAll('.skill-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }, 100);
+    });
+});
+
+// Performance optimization: Pause animations when tab is not visible
 
   // Performance optimization: Pause animations when tab is not visible
 });

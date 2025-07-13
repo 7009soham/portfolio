@@ -9,11 +9,16 @@
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Backup Font Awesome (in case CDN fails) -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css" crossorigin="anonymous"/>
-  <!-- Main Stylesheet -->
+  <!-- Replace lines 12-15 (the Font Awesome links) with these updated ones: -->
+
+<!-- Font Awesome - Latest Version with Multiple Fallbacks -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Backup CDN 1 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" crossorigin="anonymous"/>
+<!-- Backup CDN 2 -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css" crossorigin="anonymous"/>
+<!-- Backup CDN 3 -->
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" crossorigin="anonymous"/>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -233,171 +238,266 @@
     </div>
   </section>
 
-  <!-- Skills Section -->
+    <!-- Skills Section -->
   <section id="skills" class="section skills">
     <div class="container">
       <h2 class="section-title">Technical Arsenal <span class="emoji">⚔️</span></h2>
       <p class="section-subtitle">Tools I use to debug reality and optimize everything</p>
 
       <div class="skills-categories">
+        <!-- Core Languages -->
         <div class="skill-category">
           <h3><i class="fas fa-code"></i> Core Languages</h3>
           <div class="skills-grid">
             <div class="skill-item">
               <i class="fab fa-python"></i>
               <span>Python</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🐍 Python - My Love Language</div>
+                <div class="tooltip-text">
+                  Honestly? Python is poetry in code form. Clean, elegant, and gets straight to the point. 
+                  Perfect for AI/ML and solving real-world problems without the unnecessary complexity.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fab fa-java"></i>
               <span>Java</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">☕ Java - Respect but Hate</div>
+                <div class="tooltip-text">
+                  Look, I know Java is objectively better for enterprise stuff. Huge respect for what it does. 
+                  But personally? I'd rather debug Python than write verbose Java boilerplate all day.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
-              <i class="fab fa-js"></i>
+              <i class="fab fa-js-square"></i>
               <span>JavaScript</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 80%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🚀 JavaScript - Necessary Evil</div>
+                <div class="tooltip-text">
+                  It's here because JS has to be everywhere, right? Actually pretty powerful for ML with TensorFlow.js. 
+                  Love how it bridges the gap between frontend magic and backend logic.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Web & Frameworks -->
         <div class="skill-category">
           <h3><i class="fas fa-globe"></i> Web & Frameworks</h3>
           <div class="skills-grid">
             <div class="skill-item">
               <i class="fab fa-react"></i>
               <span>React</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 75%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">⚛️ React - Component Wizard</div>
+                <div class="tooltip-text">
+                  Makes complex UIs feel like building with LEGO blocks. The component-based thinking 
+                  actually helps me structure ML pipelines better too. Weird but true.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fas fa-flask"></i>
               <span>Flask</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 80%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🌶️ Flask - Minimalist Magic</div>
+                <div class="tooltip-text">
+                  Lightweight, flexible, and doesn't force opinions on you. Perfect for rapid prototyping 
+                  and turning ML models into APIs without the Django overhead.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fab fa-html5"></i>
               <span>HTML5</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🏗️ HTML5 - The Foundation</div>
+                <div class="tooltip-text">
+                  The bones of every web experience. Semantic, accessible, and the canvas 
+                  where all the magic happens. Simple but powerful when done right.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
-              <i class="fab fa-css3"></i>
+              <i class="fab fa-css3-alt"></i>
               <span>CSS3</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🎨 CSS3 - Visual Alchemy</div>
+                <div class="tooltip-text">
+                  Turning boring layouts into visual experiences. Animations, gradients, and that perfect 
+                  responsive design that works everywhere. It's art meets code.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- DevOps & Cloud -->
         <div class="skill-category">
           <h3><i class="fas fa-server"></i> DevOps & Cloud</h3>
           <div class="skills-grid">
             <div class="skill-item">
               <i class="fas fa-dharmachakra"></i>
               <span>Kubernetes</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 75%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">☸️ Kubernetes - Container Orchestrator</div>
+                <div class="tooltip-text">
+                  Managing containers like a symphony conductor. Complex? Yes. Worth it? Absolutely. 
+                  Makes scaling applications feel like magic instead of a nightmare.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fab fa-aws"></i>
               <span>AWS Services</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 80%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">☁️ AWS - Cloud Mastery</div>
+                <div class="tooltip-text">
+                  From S3 buckets to Lambda functions, AWS is like having a digital Swiss Army knife. 
+                  Scaling from zero to hero without breaking a sweat (or the bank).
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fab fa-docker"></i>
               <span>Docker</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🐳 Docker - Deployment Savior</div>
+                <div class="tooltip-text">
+                  "But it works on my machine!" - Never again. Docker containers are like 
+                  having a portable universe for your apps. DevOps without Docker is just chaos.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fab fa-git-alt"></i>
               <span>Git/GitHub</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🌿 Git - Time Machine</div>
+                <div class="tooltip-text">
+                  Version control is like having a save button for your entire project history. 
+                  Plus, nothing beats that feeling when you rescue a project with the perfect git revert.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Data & ML -->
         <div class="skill-category">
           <h3><i class="fas fa-brain"></i> Data & ML</h3>
           <div class="skills-grid">
             <div class="skill-item">
               <i class="fas fa-chart-line"></i>
               <span>Pandas</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🐼 Pandas - Data Wrangler</div>
+                <div class="tooltip-text">
+                  Turning messy data into clean insights. It's like having superpowers for spreadsheets 
+                  but without the Excel-induced headaches. Data manipulation made elegant.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fas fa-brain"></i>
               <span>Scikit-learn</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 80%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">📊 Scikit-learn - ML Swiss Army Knife</div>
+                <div class="tooltip-text">
+                  When you need ML models fast and reliable. From classification to clustering, 
+                  it's the perfect tool for turning data into insights without the complexity.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fas fa-language"></i>
               <span>NLP (Learning)</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 60%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🗣️ NLP - Human Language Decoder</div>
+                <div class="tooltip-text">
+                  Currently diving deep into making machines understand human language and intent. 
+                  Combining psychology with AI to crack the code of human communication.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item">
               <i class="fas fa-database"></i>
-              <span>MySQL</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <span>SQL</span>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🗄️ SQL - Data Whisperer</div>
+                <div class="tooltip-text">
+                  When you need to make databases talk, SQL is the universal translator. 
+                  From complex joins to performance optimization - it's like having a conversation with your data.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Superpowers -->
         <div class="skill-category">
           <h3><i class="fas fa-magic"></i> Superpowers</h3>
           <div class="skills-grid">
             <div class="skill-item superpower">
               <i class="fas fa-bug"></i>
               <span>Pro Debugging</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 95%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🔍 Pro Debugging - Bug Destroyer</div>
+                <div class="tooltip-text">
+                  I can make your app better than before. Give me any problematic code and watch me 
+                  turn chaos into clean, working solutions. It's not magic, it's method.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item superpower">
               <i class="fas fa-users"></i>
               <span>Reading People</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">🧠 People Reading - Human Debugger</div>
+                <div class="tooltip-text">
+                  Psychology meets technology. Understanding intentions, motivations, and human behavior 
+                  helps me build better user experiences and team dynamics.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item superpower">
               <i class="fas fa-clock"></i>
               <span>Time Management</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">⏰ Time Management - Efficiency Expert</div>
+                <div class="tooltip-text">
+                  Excellent at managing time and priorities. When projects need to get done right and on time, 
+                  I'm the person who makes it happen without the chaos.
+                </div>
               </div>
             </div>
+            
             <div class="skill-item superpower">
               <i class="fas fa-crown"></i>
               <span>Silent Leadership</span>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 88%"></div>
+              <div class="skill-tooltip">
+                <div class="tooltip-title">👑 Silent Leadership - Lead Without the Drama</div>
+                <div class="tooltip-text">
+                  Good at leadership without being "that leader." I guide teams through influence, 
+                  not authority. Results speak louder than titles.
+                </div>
               </div>
             </div>
           </div>

@@ -1532,6 +1532,81 @@ body {
   perspective: 1000px;
 }
 
+/* MOBILE RESPONSIVENESS FIX FOR ABOUT SECTION */
+@media screen and (max-width: 768px) {
+  /* Force About section to single column layout */
+  section#about .about-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2rem !important;
+    padding: 1rem !important;
+    grid-template-columns: none !important;
+    grid: none !important;
+  }
+
+  /* Image container - force to top */
+  section#about .about-img {
+    order: -1 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Profile card mobile styling */
+  section#about .about-img .profile-card {
+    max-width: 280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Profile image mobile sizing */
+  section#about .about-img .profile-card img {
+    width: 150px !important;
+    height: 150px !important;
+    max-width: 150px !important;
+    max-height: 150px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+  }
+
+  /* Text container - force to bottom */
+  section#about .about-text {
+    order: 1 !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 0 1rem !important;
+  }
+
+  /* Projects and Skills mobile fixes */
+  .projects-grid,
+  .skills-grid,
+  .hobbies-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Quick stats mobile fix */
+  .quick-stats {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+  section#about .about-img .profile-card img {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  section#about .about-text {
+    font-size: 0.9rem !important;
+    padding: 0 0.5rem !important;
+  }
+}
+
 /* Optimize mobile animations */
 @media (max-width: 768px) {
   .galaxy-container {
@@ -1577,4 +1652,373 @@ body {
   width: 100%;
   background: var(--accent-primary);
   box-shadow: 0 0 10px var(--accent-primary);
+}
+
+/* Add this after line 1613 in styles.css */
+
+/* Remove progress bars and add cool tooltips */
+/* Replace ALL existing tooltip styles (lines 1614-1876) with this clean version */
+
+/* REPLACE lines 1614-1817 with this CLEAN, WORKING version */
+
+/* Remove progress bars completely */
+.skill-bar,
+.skill-progress {
+  display: none !important;
+}
+
+/* Fix skills grid spacing */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+  overflow: visible !important;
+}
+
+/* Clean skill item styling with working tooltips */
+.skill-item {
+  background: var(--card-bg);
+  padding: 1.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 255, 136, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  overflow: visible;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--accent-primary);
+  box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+}
+
+.skill-item i {
+  font-size: 2.2rem;
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.skill-item:hover i {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.6));
+}
+
+.skill-item span {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  margin: 0;
+  text-align: center;
+}
+
+/* WORKING tooltip styles */
+.skill-tooltip {
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 10, 15, 0.95);
+  color: var(--text-primary);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid var(--accent-primary);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 9999;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  max-width: 280px;
+  min-width: 260px;
+  text-align: left;
+  pointer-events: none;
+  white-space: normal;
+}
+
+/* Tooltip arrow */
+.skill-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: var(--accent-primary);
+}
+
+/* CRITICAL: Show tooltip on hover */
+.skill-item:hover .skill-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+/* Tooltip content */
+.tooltip-title {
+  color: var(--accent-primary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.tooltip-text {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Ensure containers allow overflow */
+.skill-category {
+  overflow: visible;
+  margin-bottom: 3rem;
+}
+
+.skills-categories {
+  overflow: visible;
+}
+
+.skills.section {
+  overflow: visible;
+}
+
+/* Superpower skill items - special styling */
+.skill-item.superpower {
+  background: linear-gradient(135deg, var(--card-bg), rgba(0, 255, 136, 0.05));
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.skill-item.superpower:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
+}
+
+/* Mobile fixes */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+  
+  .skill-item {
+    padding: 1rem;
+    min-height: 100px;
+  }
+  
+  .skill-item i {
+    font-size: 1.8rem;
+  }
+  
+  .skill-item span {
+    font-size: 0.85rem;
+  }
+  
+  .skill-tooltip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90vw;
+    min-width: auto;
+    width: 85vw;
+    z-index: 99999;
+  }
+  
+  .skill-item:hover .skill-tooltip {
+    transform: translate(-50%, -50%);
+  }
+  
+  .skill-tooltip::before {
+    display: none;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .skill-item {
+    padding: 0.8rem;
+    min-height: 90px;
+  }
+  
+  .skill-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .skill-item span {
+    font-size: 0.8rem;
+  }
+}
+
+/* Font Awesome Icon Fallbacks - Add this after line 1870 */
+
+/* Fallback for missing Font Awesome icons */
+.skill-item i::before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif !important;
+  font-weight: 900;
+}
+
+/* If Font Awesome fails, show emoji fallbacks */
+.fa-python::before { content: "🐍"; font-family: inherit; }
+.fa-java::before { content: "☕"; font-family: inherit; }
+.fa-js-square::before { content: "🚀"; font-family: inherit; }
+.fa-react::before { content: "⚛️"; font-family: inherit; }
+.fa-flask::before { content: "🌶️"; font-family: inherit; }
+.fa-html5::before { content: "🏗️"; font-family: inherit; }
+.fa-css3-alt::before { content: "🎨"; font-family: inherit; }
+.fa-dharmachakra::before { content: "☸️"; font-family: inherit; }
+.fa-aws::before { content: "☁️"; font-family: inherit; }
+.fa-docker::before { content: "🐳"; font-family: inherit; }
+.fa-git-alt::before { content: "🌿"; font-family: inherit; }
+.fa-chart-line::before { content: "📊"; font-family: inherit; }
+.fa-brain::before { content: "🧠"; font-family: inherit; }
+.fa-language::before { content: "🗣️"; font-family: inherit; }
+.fa-database::before { content: "🗄️"; font-family: inherit; }
+.fa-bug::before { content: "🔍"; font-family: inherit; }
+.fa-users::before { content: "👥"; font-family: inherit; }
+.fa-clock::before { content: "⏰"; font-family: inherit; }
+.fa-crown::before { content: "👑"; font-family: inherit; }
+.fa-code::before { content: "💻"; font-family: inherit; }
+.fa-globe::before { content: "🌐"; font-family: inherit; }
+.fa-server::before { content: "🖥️"; font-family: inherit; }
+.fa-magic::before { content: "✨"; font-family: inherit; }
+
+/* Ensure icons are displayed */
+.skill-item i {
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+}
+
+/* Add this after your existing tooltip styles (around line 1870) */
+
+/* Mobile tooltip fixes - replace existing mobile section */
+@media (max-width: 768px) {
+  /* Disable hover on mobile, use tap instead */
+  .skill-item:hover .skill-tooltip {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  
+  /* Mobile tap-to-show tooltip */
+  .skill-item.active .skill-tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-width: 90vw !important;
+    min-width: auto !important;
+    width: 85vw !important;
+    z-index: 999999 !important;
+    background: rgba(5, 5, 10, 0.98) !important;
+    border: 2px solid var(--accent-primary) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  .skill-tooltip::before,
+  .skill-tooltip::after {
+    display: none !important;
+  }
+  
+  /* Add close button for mobile tooltips */
+  .skill-tooltip::before {
+    content: '✕';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: block !important;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 1;
+  }
+  
+  /* Grid adjustments */
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+  
+  .skill-item {
+    padding: 1rem;
+    min-height: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .skill-item:active {
+    transform: scale(0.95);
+  }
+  
+  .skill-item i {
+    font-size: 1.8rem;
+  }
+  
+  .skill-item span {
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .skill-item {
+    padding: 0.8rem;
+    min-height: 90px;
+  }
+  
+  .skill-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .skill-item span {
+    font-size: 0.8rem;
+  }
+  
+  .skill-tooltip {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    padding: 1.5rem !important;
+  }
+  
+  .tooltip-title {
+    font-size: 1rem !important;
+  }
+  
+  .tooltip-text {
+    font-size: 0.85rem !important;
+  }
 }
