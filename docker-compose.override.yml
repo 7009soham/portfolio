@@ -1,9 +1,0 @@
-services:
-  website:
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx-dev.conf:/etc/nginx/conf.d/default.conf:ro
-      # Comment out LetsEncrypt mount for dev, or leave it if you have it
-      # - /etc/letsencrypt:/etc/letsencrypt:ro
-    # Remove 443 for dev to avoid TLS cert errors
